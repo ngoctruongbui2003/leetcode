@@ -1,5 +1,5 @@
 class Solution(object):
-    def longestConsecutive(self, nums):
+    def longestConsecutive(self, nums):  # Use sorted
         """
         :type nums: List[int]
         :rtype: int
@@ -16,6 +16,32 @@ class Solution(object):
                 current_length = 1
             max_length = max(max_length, current_length)
 
+        return max_length
+
+    def longestConsecutive2(self, nums):  # Use two pointers
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if len(nums) <= 1:
+            return len(nums)
+
+        numSet = set(nums)
+        max_length = 0
+
+        for i in range(len(numSet)):
+            cur_length = 1
+            left, right = nums[i] - 1, nums[i] + 1
+            while left in numSet:
+                numSet.remove(left)
+                cur_length += 1
+                left -= 1
+            while right in numSet:
+                numSet.remove(right)
+                cur_length += 1
+                right += 1
+
+            max_length = max(cur_length, max_length)
         return max_length
 
 
